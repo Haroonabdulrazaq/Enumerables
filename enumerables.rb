@@ -26,6 +26,7 @@ def my_each_with_index
     end
     not_invited = "Talha"
 puts ["Haroon","Umair","Talha", "Jaqob","Asahad"].my_select { |friend| friend != not_invited}
+
 def my_all?
     check = false
     self.my_each do |i|
@@ -55,6 +56,18 @@ def my_none?
 end
 
 puts "\n"
-puts ["Haroon","Umair","Talha", "Jaqob","Asahad"].my_none? { |friend| friend.length < 7}
+puts ["Haroon","Umair","Talha", "Jaqob","Arshad"].my_none? { |friend| friend.length > 7}
+
+
+def my_count
+  counter =0
+  self.my_each do |i|
+    if yield(i)
+      counter += 1
+    end
+  end
+  counter
+end
+puts [4,2,4,2].my_count { |element| element%2 == 1}
 
 end

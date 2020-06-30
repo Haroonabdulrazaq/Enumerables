@@ -41,4 +41,20 @@ end
 puts "\n"
 puts ["Haroon","Umair","Talhaaaa", "Jaqob","Asahad"].my_all? { |friend| friend.length < 7}
 
+def my_none?
+    check = false
+    self.my_each do |i|
+        if yield(i) == true
+            check = false
+            return check
+        else
+            check = true
+        end
+    end
+    return check
+end
+
+puts "\n"
+puts ["Haroon","Umair","Talha", "Jaqob","Asahad"].my_none? { |friend| friend.length < 7}
+
 end

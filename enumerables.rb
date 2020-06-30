@@ -1,7 +1,7 @@
 module Enumerable
- #My Each Method
+ #My Each Method                         
   def my_each 
-    for i in 0...self.length
+    for i in 0...self.length    
       yield(self[i])
     end
   end

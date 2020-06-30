@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Enumerable
   def my_each 
     for i in 0...self.length
@@ -39,7 +37,7 @@ def my_all?
     end
     return check
 end
-puts "\n"
+ 
 puts ["Haroon","Umair","Talhaaaa", "Jaqob","Asahad"].my_all? { |friend| friend.length < 7}
 
 def my_none?
@@ -54,8 +52,7 @@ def my_none?
     end
     return check
 end
-
-puts "\n"
+ 
 puts ["Haroon","Umair","Talha", "Jaqob","Arshad"].my_none? { |friend| friend.length > 7}
 
 
@@ -69,9 +66,6 @@ def my_count
   counter
 end
 puts [1,4,2,4,2].my_count { |element| element%2 == 0} 
- 
-
-puts "My Inject"
 
 def my_inject
     result = self[0]
@@ -81,19 +75,8 @@ def my_inject
   return result
 end
  puts [1,2,3,4].my_inject { |sum, n| sum - n } 
-
-
-#  def my_map(prock)
-#     result =[]
-#     self.my_each do |i|
-#       result.push(prock.call(i))
-#     end
-#     return result
-#   end
  
-
-
-  puts "Proc with condition"
+  
  def my_map(proc = nil)
   result =[]
     if proc
@@ -107,20 +90,12 @@ end
     end
     return result
   end
-  puts "Proc test \n" 
+
   result_proc = Proc.new {|x| x * 3 }
   puts [1,2,3,4].my_map(result_proc)
-  puts "Proc end \n"
-
-  
-
-
-
- puts "multiply_els "
-
-# puts multiply_els([1,2,3])
 
 end
+
 def multiply_els(arra)
     arra.my_inject do |i , j|
         i * j

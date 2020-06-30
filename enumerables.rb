@@ -70,15 +70,6 @@ def my_count
 end
 puts [1,4,2,4,2].my_count { |element| element%2 == 0} 
  
-def my_map
-  result =[]
-  self.my_each do |i|
-    result.push(yield(i))
-  end
-  return result
-end 
- result = [1,4,2,4,2].my_map { |element| element * 2  } 
-puts result
 
 puts "My Inject"
 
@@ -91,8 +82,20 @@ def my_inject
 end
  puts [1,2,3,4].my_inject { |sum, n| sum - n } 
 
-puts "multiply_els "
+ def my_map(prock)
+    result =[]
+    self.my_each do |i|
+      result.push(prock.call(i))
+    end
+    return result
+  end
+  puts "Proc test \n" 
+  result_proc = Proc.new {|x| x * 3 }
+  puts [1,2,3,4].my_map(result_proc)
+  puts "Proc end \n"
 
+
+ puts "multiply_els "
 
 # puts multiply_els([1,2,3])
 

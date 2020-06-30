@@ -90,4 +90,16 @@ def my_inject
   return result
 end
  puts [1,2,3,4].my_inject { |sum, n| sum - n } 
+
+puts "multiply_els "
+
+
+# puts multiply_els([1,2,3])
+
 end
+def multiply_els(arra)
+    arra.my_inject do |i , j|
+        i * j
+    end
+end
+puts multiply_els([2,4,5])

@@ -1,4 +1,5 @@
 module Enumerable
+ #My Each Method
   def my_each 
     for i in 0...self.length
       yield(self[i])
@@ -6,6 +7,7 @@ module Enumerable
   end
   [1, 2, 3, 6, 5].my_each { |i| puts i }
 
+ #My  Each_with_index
 def my_each_with_index 
    for i in 0...self.length
     yield(i,self[i])
@@ -13,6 +15,7 @@ def my_each_with_index
     end
     [7, 9, 33, 61, 15].my_each_with_index { |i, element| puts "#{i} " "#{element}" }
 
+ #My Select Method
     def my_select
         invited_list =[]
           self.my_each do |friend|
@@ -25,6 +28,7 @@ def my_each_with_index
     not_invited = "Talha"
 puts ["Haroon","Umair","Talha", "Jaqob","Asahad"].my_select { |friend| friend != not_invited}
 
+ #My  All
 def my_all?
     check = false
     self.my_each do |i|
@@ -37,9 +41,9 @@ def my_all?
     end
     return check
 end
- 
 puts ["Haroon","Umair","Talhaaaa", "Jaqob","Asahad"].my_all? { |friend| friend.length < 7}
 
+ #My None
 def my_none?
     check = false
     self.my_each do |i|
@@ -55,7 +59,7 @@ end
  
 puts ["Haroon","Umair","Talha", "Jaqob","Arshad"].my_none? { |friend| friend.length > 7}
 
-
+ #My Count
 def my_count
   counter =0
   self.my_each do |i|
@@ -67,6 +71,7 @@ def my_count
 end
 puts [1,4,2,4,2].my_count { |element| element%2 == 0} 
 
+ #My Inject
 def my_inject
     result = self[0]
     for i in 0...self.length-1
@@ -76,7 +81,7 @@ def my_inject
 end
  puts [1,2,3,4].my_inject { |sum, n| sum - n } 
  
-  
+  #My  my_map with condition of Proc and Block
  def my_map(proc = nil)
   result =[]
     if proc
@@ -96,6 +101,7 @@ end
 
 end
 
+ #Use multipliyer with inject method
 def multiply_els(arra)
     arra.my_inject do |i , j|
         i * j

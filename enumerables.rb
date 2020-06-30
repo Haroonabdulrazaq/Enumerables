@@ -26,4 +26,19 @@ def my_each_with_index
     end
     not_invited = "Talha"
 puts ["Haroon","Umair","Talha", "Jaqob","Asahad"].my_select { |friend| friend != not_invited}
+def my_all?
+    check = false
+    self.my_each do |i|
+        if yield(i) == true
+            check = true
+        else
+            check = false
+            return check
+         end
+    end
+    return check
+end
+puts "\n"
+puts ["Haroon","Umair","Talhaaaa", "Jaqob","Asahad"].my_all? { |friend| friend.length < 7}
+
 end

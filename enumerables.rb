@@ -79,4 +79,15 @@ def my_map
 end 
  result = [1,4,2,4,2].my_map { |element| element * 2  } 
 puts result
+
+puts "My Inject"
+
+def my_inject
+    result = self[0]
+    for i in 0...self.length-1
+    result = yield(result,self[i+1])
+  end
+  return result
+end
+ puts [1,2,3,4].my_inject { |sum, n| sum - n } 
 end

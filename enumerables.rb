@@ -68,6 +68,15 @@ def my_count
   end
   counter
 end
-puts [4,2,4,2].my_count { |element| element%2 == 1}
-
+puts [1,4,2,4,2].my_count { |element| element%2 == 0} 
+ 
+def my_map
+  result =[]
+  self.my_each do |i|
+    result.push(yield(i))
+  end
+  return result
+end 
+ result = [1,4,2,4,2].my_map { |element| element * 2  } 
+puts result
 end

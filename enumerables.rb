@@ -82,10 +82,28 @@ def my_inject
 end
  puts [1,2,3,4].my_inject { |sum, n| sum - n } 
 
- def my_map(prock)
-    result =[]
-    self.my_each do |i|
-      result.push(prock.call(i))
+
+#  def my_map(prock)
+#     result =[]
+#     self.my_each do |i|
+#       result.push(prock.call(i))
+#     end
+#     return result
+#   end
+ 
+
+
+  puts "Proc with condition"
+ def my_map(proc = nil)
+  result =[]
+    if proc
+      self.my_each do |i|
+        result.push(proc.call(i))
+      end
+    else
+      self.my_each do |i|
+        result.push(yield(i))
+      end
     end
     return result
   end
@@ -93,6 +111,9 @@ end
   result_proc = Proc.new {|x| x * 3 }
   puts [1,2,3,4].my_map(result_proc)
   puts "Proc end \n"
+
+  
+
 
 
  puts "multiply_els "

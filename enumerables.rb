@@ -48,6 +48,8 @@ module Enumerable
     check
   end
 
+
+
   # My None
   def my_none?
     return to_enum unless block_given?
@@ -65,9 +67,9 @@ module Enumerable
   end
 
   # My Count
-  def my_count
-    return to_enum unless block_given?
-
+  def my_count(num=0)
+    return self.size unless block_given? || num == 0
+    
     counter = 0
     my_each do |i|
       counter += 1 if yield(i)
@@ -75,12 +77,13 @@ module Enumerable
     counter
   end
 
+
   # My Inject
   def my_inject
     return to_enum unless block_given?
 
     result = self[0]
-    (0...length - 1).each do |i|
+    (0...length - 1).times do |i|
       result = yield(result, self[i + 1])
     end
     result

@@ -2,7 +2,10 @@
 
 module Enumerable
   # My Each Method
+
   def my_each
+    return to_enum unless block_given?
+
     length.times do |i|
       yield(self[i])
     end
@@ -10,6 +13,8 @@ module Enumerable
 
   # My  Each_with_index
   def my_each_with_index
+    return to_enum unless block_given?
+
     length.times do |i|
       yield(i, self[i])
     end
@@ -17,15 +22,20 @@ module Enumerable
 
   # My Select Method
   def my_select
+    return to_enum unless block_given?
+
     invited_list = []
     my_each do |friend|
       invited_list.push(friend) if yield(friend)
     end
+
     invited_list
   end
 
   # My  All
   def my_all?
+    return to_enum unless block_given?
+
     check = false
     my_each do |i|
       if yield(i) == true
@@ -40,6 +50,8 @@ module Enumerable
 
   # My None
   def my_none?
+    return to_enum unless block_given?
+
     check = false
     my_each do |i|
       if yield(i) == true
@@ -54,6 +66,8 @@ module Enumerable
 
   # My Count
   def my_count
+    return to_enum unless block_given?
+
     counter = 0
     my_each do |i|
       counter += 1 if yield(i)
@@ -63,6 +77,8 @@ module Enumerable
 
   # My Inject
   def my_inject
+    return to_enum unless block_given?
+
     result = self[0]
     (0...length - 1).each do |i|
       result = yield(result, self[i + 1])
@@ -72,6 +88,8 @@ module Enumerable
 
   # My  my_map with condition of Proc and Block
   def my_map(proc = nil)
+    return to_enum unless block_given?
+
     result = []
     if proc
       my_each do |i|
@@ -88,6 +106,8 @@ end
 
 # Use multipliyer with inject ymethod
 def multiply_els(arra)
+  return to_enum unless block_given?
+
   arra.my_inject do |i, j|
     i * j
   end

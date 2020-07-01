@@ -16,6 +16,11 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   ExcludedMethods: ['describe']
   Max: 30
+Metrics/PerceivedComplexity:
+  Max: 150
+Metrics/CyclomaticComplexity:
+  Max: 150
+
 
 
 Style/Documentation:
@@ -50,3 +55,4 @@ Style/HashTransformValues:
   Enabled: false
 Style/CaseEquality: 
   Disable: true
+

@@ -33,78 +33,87 @@ module Enumerable
   end
 
   # My  All
-  def my_all?
-    return to_enum unless block_given?
-
-    check = false
-    my_each do |i|
-      if yield(i) == true
-        check = true
-      else
-        check = false
-        return check
+  def my_all?(args = nil)
+    # Block_given
+    if block_given?
+      my_each do |element|
+        return false if yield(element) == false
       end
-    end
-    check
-  end
 
-
-
-  # My None
-  def my_none?
-    return to_enum unless block_given?
-
-    check = false
-    my_each do |i|
-      if yield(i) == true
-        check = false
-        return check
-      else
-        check = true
-      end
-    end
-    check
-  end
-
-  # My Count
-  def my_count(num=0)
-    return self.size unless block_given? || num == 0
-    
-    counter = 0
-    my_each do |i|
-      counter += 1 if yield(i)
-    end
-    counter
-  end
-
-
-  # My Inject
-  def my_inject
-    return to_enum unless block_given?
-
-    result = self[0]
-    (0...length - 1).times do |i|
-      result = yield(result, self[i + 1])
-    end
-    result
-  end
-
-  # My  my_map with condition of Proc and Block
-  def my_map(proc = nil)
-    return to_enum unless block_given?
-
-    result = []
-    if proc
+      # nil
+    elsif args.nil?
       my_each do |i|
-        result.push(proc.call(i))
+        return false if i.nil?
       end
+    elsif args.nil? && (args.is_a? Class)
+      return false
+    elsif !args.nil? && (args.is_a? Class)
+      return true
+    elsif Regexp
+      my_each do |i|
+        return false if args.match(i)
+
+        return true
+      end
+    end
+    true
+  end
+  true
+end
+
+# My None
+def my_none?
+  return to_enum unless block_given?
+
+  check = false
+  my_each do |i|
+    if yield(i) == true
+      check = false
+      return check
     else
-      my_each do |i|
-        result.push(yield(i))
-      end
+      check = true
     end
-    result
   end
+  check
+end
+
+# My Count
+def my_count(num = 0)
+  return size unless block_given? || num.zero?
+
+  counter = 0
+  my_each do |i|
+    counter += 1 if yield(i)
+  end
+  counter
+end
+
+# My Inject
+def my_inject
+  return to_enum unless block_given?
+
+  result = self[0]
+  (0...length - 1).times do |i|
+    result = yield(result, self[i + 1])
+  end
+  result
+end
+
+# My  my_map with condition of Proc and Block
+def my_map(proc = nil)
+  return to_enum unless block_given?
+
+  result = []
+  if proc
+    my_each do |i|
+      result.push(proc.call(i))
+    end
+  else
+    my_each do |i|
+      result.push(yield(i))
+    end
+  end
+  result
 end
 
 # Use multipliyer with inject ymethod

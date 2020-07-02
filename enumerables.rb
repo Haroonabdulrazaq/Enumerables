@@ -56,33 +56,43 @@ module Enumerable
   end
 
   def my_none?(args = nil)
-    
     if block_given?
+      check = false
       my_each do |element|
-        return true if yield(element) == false
+        if yield(element) == false
+          check = true
+        else
+          check = false
+          return check
+        end
       end
+      return check
     elsif !args.nil? && (args.is_a? Class)
       my_each do |i|
-       return false if  i.is_a? args  
+        return false if i.is_a? args
       end
-    elsif !args.nil? && Regexp
+    elsif args.class == Regexp
       my_each do |i|
-        return true if args.match(i)  
-       end
-    end
-    return true unless block_given?
-    return false
-  end
-  puts %w{ant bear cat}.my_none? (/d/) 
+        return false if i.match(args)
 
-  # puts %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
-  # puts %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
-  # puts %w{ant bear cat}.my_none? (/d/)                        #=> true
-  # puts [1, 3.14, 42].my_none? (Float)                         #=> false
-  # puts [].my_none?                                           #=> true
-  # puts [nil].my_none?                                      #=> true
-  # puts [nil, false].my_none?                                #=> true
-  # puts [nil, false, true].my_none?                           #=> false
+        return true
+      end
+    end
+    unless block_given?
+      my_each { |x| return false if x == true }
+      return true
+    end
+    false
+  end
+
+  # puts %w[ant bear cat].my_none? { |word| word.length == 5 } #=> true
+  # puts %w[ant bear cat].my_none? { |word| word.length >= 4 } #=> false
+  # puts %w[ant bear cat].my_none?(/d/)                        #=> true
+  # puts [1, 3.14, 42].my_none?(Float)                         #=> false
+  # puts [].my_none? #=> true
+  # puts [nil].my_none? #=> true
+  # puts [nil, false].my_none? #=> true
+  # puts [nil, false, true].my_none? #=> false
 
   # My Count
   def my_count(num = 0)

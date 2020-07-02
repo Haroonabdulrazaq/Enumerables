@@ -1,4 +1,5 @@
 # module custom Enumerables
+# rubocop:disable Metrics/ModuleLength
 module Enumerable
   # My Each Method
 
@@ -54,6 +55,7 @@ module Enumerable
     true
   end
 
+  # rubocop:disable Metrics/MethodLength
   def my_any?(args = nil)
     check = false
     is_true = false
@@ -121,6 +123,7 @@ module Enumerable
     false
   end
 
+  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   # My Count
   def my_count(num = 0)
@@ -161,7 +164,7 @@ module Enumerable
     result
   end
 end
-
+# rubocop:enable Metrics/ModuleLength
 # Use multipliyer with inject ymethod
 def multiply_els(arra)
   return to_enum unless block_given?

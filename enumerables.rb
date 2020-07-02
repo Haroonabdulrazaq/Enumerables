@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # module custom Enumerables
 module Enumerable
   # My Each Method

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # module custom Enumerables
 module Enumerable
   # My Each Method
@@ -120,8 +122,8 @@ module Enumerable
     end
     false
   end
-  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
 
+  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   # My Count
   def my_count(num = 0)
     return size unless block_given? || num.zero?

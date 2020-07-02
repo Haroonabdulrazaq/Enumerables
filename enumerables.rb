@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # module custom Enumerables
 module Enumerable
   # My Each Method
@@ -33,6 +31,7 @@ module Enumerable
     invited_list
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   # My  All
   def my_all?(args = nil)
     if block_given?
@@ -53,6 +52,43 @@ module Enumerable
       end
     end
     true
+  end
+
+  def my_any?(args = nil)
+    check = false
+    is_true = false
+    if block_given?
+      my_each do |i|
+        if yield(i) == true
+          check = true
+          return check
+        else
+          check = false
+        end
+      end
+      return check
+    elsif args.class == Regexp
+      my_each do |i|
+        return true if i.match(args)
+
+        return false
+      end
+    elsif !args.nil? && (args.is_a? Class)
+      my_each do |i|
+        if i.is_a? args
+          is_true = true
+          return true
+        else
+          is_true = false
+        end
+      end
+      return is_true
+    end
+    unless block_given?
+      my_each { |x| return true if x == true }
+      return false
+    end
+    false
   end
 
   def my_none?(args = nil)
@@ -84,15 +120,7 @@ module Enumerable
     end
     false
   end
-
-  # puts %w[ant bear cat].my_none? { |word| word.length == 5 } #=> true
-  # puts %w[ant bear cat].my_none? { |word| word.length >= 4 } #=> false
-  # puts %w[ant bear cat].my_none?(/d/)                        #=> true
-  # puts [1, 3.14, 42].my_none?(Float)                         #=> false
-  # puts [].my_none? #=> true
-  # puts [nil].my_none? #=> true
-  # puts [nil, false].my_none? #=> true
-  # puts [nil, false, true].my_none? #=> false
+  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
 
   # My Count
   def my_count(num = 0)

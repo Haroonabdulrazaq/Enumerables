@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # module custom Enumerables
 
 module Enumerable
@@ -39,8 +41,6 @@ module Enumerable
       my_each do |element|
         return false if yield(element) == false
       end
-
-      # nil
     elsif args.nil?
       my_each do |i|
         return false if i.nil?
@@ -63,18 +63,27 @@ end
 
 # My None
 def my_none?
-  return to_enum unless block_given?
-
-  check = false
-  my_each do |i|
-    if yield(i) == true
-      check = false
-      return check
-    else
-      check = true
+  # Block_given
+  if block_given?
+    my_each do |element|
+      return true if yield(element) == false
     end
-  end
-  check
+  elsif !block_given?
+    return true
+  elsif args.nil?
+    my_each do |i|
+      return false if i.nil?
+    end
+  elsif args.nil? && (args.is_a? Class)
+    return false
+  elsif !args.nil? && (args.is_a? Class)
+    return true
+  elsif Regexp
+    my_each do |i|
+      return true if args.match(!i)
+    end
+end
+  true
 end
 
 # My Count

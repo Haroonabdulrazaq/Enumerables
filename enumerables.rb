@@ -98,12 +98,6 @@ module Enumerable
     end
     false
   end
-  puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
-  puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
-  puts %w[ant bear cat].my_any?(/d/)                        #=> false
-  puts [nil, true, 99].my_any?(Integer)                     #=> true
-  puts [nil, true, 99].my_any?(false)                              #=> true
-  puts [].my_any?                                           #=> false
 
   def my_none?(args = nil)
     if block_given?

@@ -43,14 +43,27 @@ module Enumerable
       my_each do |i|
         return false if i.nil?
       end
-    elsif args.nil? && (args.is_a? Class)
-      return false
     elsif !args.nil? && (args.is_a? Class)
-      return true
-    elsif Regexp
+      class_chk = false
       my_each do |i|
-        return false if args.match(i)
+        if i.is_a? args
+          class_chk = true
+        else
+          class_chk = false
+          return class_chk
+        end
       end
+      return class_chk
+    elsif !args.nil? && args.class == Regexp
+      my_each do |i|
+        return false unless args.match(i)
+      end
+      return true
+    else
+      my_each do |i|
+        return false if i != args
+      end
+      return true
     end
     true
   end

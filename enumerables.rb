@@ -133,7 +133,7 @@ module Enumerable
     counter
   end
 
-  # My Inject
+  # My Inject Method
   def my_inject
     return to_enum unless block_given?
 

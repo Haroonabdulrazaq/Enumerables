@@ -34,7 +34,7 @@ module Enumerable
   # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
   # My  All
-  # updated my all
+
   def my_all?(args = nil)
     if block_given?
       my_each do |element|
@@ -72,7 +72,6 @@ module Enumerable
     elsif args.class == Regexp
       my_each do |i|
         return true if i.match(args)
-
         return false
       end
     elsif !args.nil? && (args.is_a? Class)
@@ -92,6 +91,7 @@ module Enumerable
     end
     false
   end
+ 
 
   def my_none?(args = nil)
     if block_given?
@@ -125,16 +125,19 @@ module Enumerable
   # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
 
   # My Count
-  def my_count(num = 0)
-    return size unless block_given? || num.zero?
-
+  def my_count(num = nil) 
     counter = 0
-    my_each do |i|
-      counter += 1 if yield(i)
+    if num != nil
+        my_each {|i| counter+=1 if num == i }
+    elsif block_given?
+      my_each do |i|
+        counter += 1 if yield(i)
+      end
+    else return size
     end
-    counter
+    return counter
   end
-
+ 
   # My Inject
   def my_inject
     return to_enum unless block_given?

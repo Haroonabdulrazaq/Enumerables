@@ -84,14 +84,26 @@ module Enumerable
         end
       end
       return is_true
+    elsif !(args.is_a? Class ) &&  args != Regexp 
+      my_each do |x|
+        if x == args
+          return true
+        end
+      end
+      return false
     end
-    unless block_given?
+    unless block_given? 
       my_each { |x| return true if x == true }
       return false
     end
     false
   end
- 
+  puts %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
+  puts %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
+  puts %w[ant bear cat].my_any?(/d/)                        #=> false
+  puts [nil, true, 99].my_any?(Integer)                     #=> true
+  puts [nil, true, 99].my_any?(false)                              #=> true
+  puts [].my_any?                                           #=> false
 
   def my_none?(args = nil)
     if block_given?

@@ -15,8 +15,14 @@ module Enumerable
   def my_each_with_index
     return to_enum unless block_given?
 
-    length.times do |i|
-      yield(i, self[i])
+    arr = []
+    if is_a? Array
+      length.times do |i|
+        yield(self[i], i)
+      end
+    elsif is_a? Range
+      arr = collect.to_a
+      arr.my_each { |i| "#{arr[i]}  #{i}" }
     end
   end
 
@@ -171,9 +177,6 @@ module Enumerable
     end
   end
 
-  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/MethodLength
-  # My Count
   def my_count(num = nil)
     counter = 0
     if !num.nil?
@@ -186,6 +189,10 @@ module Enumerable
     end
     counter
   end
+
+  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # My Count
 
   # My  my_map with condition of Proc and Block
   def my_map(proc = nil)

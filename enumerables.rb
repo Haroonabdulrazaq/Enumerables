@@ -33,7 +33,9 @@ module Enumerable
   end
 
   # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
   # My  All
+  # updated my all
   def my_all?(args = nil)
     if block_given?
       my_each do |element|
@@ -68,7 +70,6 @@ module Enumerable
     true
   end
 
-  # rubocop:disable Metrics/MethodLength
   def my_any?(args = nil)
     check = false
     is_true = false

@@ -1,5 +1,4 @@
 # module custom Enumerables
-# rubocop:disable Metrics/ModuleLength
 module Enumerable
   # My Each Method
 
@@ -43,32 +42,18 @@ module Enumerable
       my_each do |i|
         return false if i.nil?
       end
+    elsif args.nil? && (args.is_a? Class)
+      return false
     elsif !args.nil? && (args.is_a? Class)
-      class_chk = false
-      my_each do |i|
-        if i.is_a? args
-          class_chk = true
-        else
-          class_chk = false
-          return class_chk
-        end
-      end
-      return class_chk
-    elsif !args.nil? && args.class == Regexp
-      my_each do |i|
-        return false unless args.match(i)
-      end
       return true
-    else
+    elsif Regexp
       my_each do |i|
-        return false if i != args
+        return false if args.match(i)
       end
-      return true
     end
     true
   end
 
-  # rubocop:disable Metrics/MethodLength
   def my_any?(args = nil)
     check = false
     is_true = false
@@ -135,9 +120,8 @@ module Enumerable
     end
     false
   end
-
-  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+
   # My Count
   def my_count(num = 0)
     return size unless block_given? || num.zero?
@@ -149,7 +133,7 @@ module Enumerable
     counter
   end
 
-  # My Inject Method
+  # My Inject
   def my_inject
     return to_enum unless block_given?
 
@@ -177,7 +161,7 @@ module Enumerable
     result
   end
 end
-# rubocop:enable Metrics/ModuleLength
+
 # Use multipliyer with inject ymethod
 def multiply_els(arra)
   return to_enum unless block_given?

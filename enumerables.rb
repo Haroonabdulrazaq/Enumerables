@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # module custom Enumerables
 module Enumerable
   # My Each Method
@@ -72,6 +74,7 @@ module Enumerable
     elsif args.class == Regexp
       my_each do |i|
         return true if i.match(args)
+
         return false
       end
     elsif !args.nil? && (args.is_a? Class)
@@ -84,15 +87,13 @@ module Enumerable
         end
       end
       return is_true
-    elsif !(args.is_a? Class ) &&  args != Regexp 
+    elsif !(args.is_a? Class) && args != Regexp
       my_each do |x|
-        if x == args
-          return true
-        end
+        return true if x == args
       end
       return false
     end
-    unless block_given? 
+    unless block_given?
       my_each { |x| return true if x == true }
       return false
     end
@@ -128,31 +129,63 @@ module Enumerable
     end
     false
   end
-  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
 
+  # My Inject
+  def my_inject(param = nil)
+    arra = []
+    arra = collect.to_a
+    if block_given? && param.nil?
+      if is_a? Range
+        sum = arra[0]
+        (arra.length - 1).times do |i|
+          sum = yield(sum, arra[i + 1])
+        end
+        sum
+      else
+        result = self[0]
+        (length - 1).times do |i|
+          result = yield(result, self[i + 1])
+          return result
+        end
+      end
+    elsif block_given? && !param.nil?
+      if is_a? Range
+        sum = arra[0]
+        (arra.length - 1).times do |i|
+          sum = yield(sum, arra[i + 1])
+        end
+        sum
+      else
+        result = self[0]
+        (length - 1).times do |i|
+          result = yield(result, self[i + 1])
+          return result
+        end
+      end
+    elsif param.is_a? Symbol
+      sum = arra[0]
+      symb = param.to_sym
+      (arra.length - 1).times do |i|
+        sum = sum.send(symb, arra[i + 1])
+      end
+      sum
+    end
+  end
+
+  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
   # My Count
-  def my_count(num = nil) 
+  def my_count(num = nil)
     counter = 0
-    if num != nil
-        my_each {|i| counter+=1 if num == i }
+    if !num.nil?
+      my_each { |i| counter += 1 if num == i }
     elsif block_given?
       my_each do |i|
         counter += 1 if yield(i)
       end
     else return size
     end
-    return counter
-  end
- 
-  # My Inject
-  def my_inject
-    return to_enum unless block_given?
-
-    result = self[0]
-    (0...length - 1).times do |i|
-      result = yield(result, self[i + 1])
-    end
-    result
+    counter
   end
 
   # My  my_map with condition of Proc and Block

@@ -1,5 +1,5 @@
 # Enumerables
-In this project we re-created some of the Ruby's enumerable methods like each, all, none, count, inject and map. 
+In this project we re-created some of the Ruby's enumerable methods like each, all, any, none, count, inject and map. 
 ## Built With
 
 - Ruby 2.7.1

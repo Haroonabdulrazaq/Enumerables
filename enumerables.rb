@@ -1,6 +1,5 @@
-# frozen_string_literal: true
-
 # module custom Enumerables
+# rubocop:disable Metrics/ModuleLength
 module Enumerable
   # My Each Method
 
@@ -204,6 +203,7 @@ module Enumerable
     end
     result
   end
+  # rubocop:enable Metrics/ModuleLength
 end
 
 # Use multipliyer with inject ymethod

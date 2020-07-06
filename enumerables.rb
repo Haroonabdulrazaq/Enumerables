@@ -5,17 +5,15 @@ module Enumerable
 
   def my_each
     return to_enum unless block_given?
-    arra = self
     length.times do |i|
-      yield(arra[i])
+      yield(self[i])
     end
-    return arra
+    return self
   end
-
+ 
   # My  Each_with_index
   def my_each_with_index
     return to_enum unless block_given?
-
     arr = []
     if is_a? Array
       length.times do |i|
@@ -85,7 +83,6 @@ module Enumerable
     elsif args.class == Regexp
       my_each do |i|
         return true if i.match(args)
-
         return false
       end
     elsif !args.nil? && (args.is_a? Class)
@@ -110,12 +107,6 @@ module Enumerable
     end
     false
   end
-
-  true_block =  proc { |num| num <= 9 }
-  false_block =  proc { |num| num > 9 }
-  range = Range.new(5,50)
-  p range.my_any?(&false_block) 
-  # p range.any?(&false_block)
 
   def my_none?(args = nil)
     if block_given?
@@ -162,8 +153,8 @@ module Enumerable
         result = self[0]
         (length - 1).times do |i|
           result = yield(result, self[i + 1])
-          return result
         end
+        return result
       end
     elsif block_given? && !param.nil?
       if is_a? Range
@@ -201,7 +192,7 @@ module Enumerable
     end
     counter
   end
-
+ 
   # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
   # My Count

@@ -1,10 +1,12 @@
+
 # module custom Enumerables
 # rubocop:disable Metrics/ModuleLength
 module Enumerable
+  # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
   # My Each Method
 
   def my_each
-   # return to_enum unless block_given?
     if is_a? Array
       length.times do |i|
         yield(self[i])
@@ -15,12 +17,13 @@ module Enumerable
         yield(arr[i])
       end
     end
-    return self
+    self
   end
- 
+
   # My  Each_with_index
   def my_each_with_index
     return to_enum unless block_given?
+
     arr = []
     if is_a? Array
       length.times do |i|
@@ -30,9 +33,9 @@ module Enumerable
       arr = collect.to_a
       arr.my_each { |i| "#{arr[i]}  #{i}" }
     end
-    return self
+    self
   end
- 
+
   # My Select Method
   def my_select
     return to_enum unless block_given?
@@ -45,8 +48,6 @@ module Enumerable
     invited_list
   end
 
-  # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/MethodLength
   # My  All
 
   def my_all?(args = nil)
@@ -63,14 +64,12 @@ module Enumerable
     elsif !args.nil? && (args.is_a? Class)
       return true
     elsif !block_given? && !args.nil?
-       return false 
+      return false
     elsif Regexp
       my_each do |i|
         return true if args.match(i)
       end
       return false
-    elsif self.is_a? Range 
-      return "Its a range"
     end
     true
   end
@@ -91,6 +90,7 @@ module Enumerable
     elsif args.class == Regexp
       my_each do |i|
         return true if i.match(args)
+
         return false
       end
     elsif !args.nil? && (args.is_a? Class)
@@ -162,7 +162,7 @@ module Enumerable
         (length - 1).times do |i|
           result = yield(result, self[i + 1])
         end
-        return result
+        result
       end
     elsif block_given? && !param.nil?
       if is_a? Range
@@ -200,9 +200,7 @@ module Enumerable
     end
     counter
   end
- 
-  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/MethodLength
+
   # My Count
 
   # My  my_map with condition of Proc and Block
@@ -222,6 +220,8 @@ module Enumerable
     result
   end
   # rubocop:enable Metrics/ModuleLength
+  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
 end
 
 # Use multipliyer with inject ymethod
@@ -232,4 +232,3 @@ def multiply_els(arra)
     i * j
   end
 end
-

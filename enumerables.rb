@@ -1,4 +1,3 @@
-
 # module custom Enumerables
 # rubocop:disable Metrics/ModuleLength
 module Enumerable

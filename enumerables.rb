@@ -5,10 +5,11 @@ module Enumerable
 
   def my_each
     return to_enum unless block_given?
-
+    arra = self
     length.times do |i|
-      yield(self[i])
+      yield(arra[i])
     end
+    return arra
   end
 
   # My  Each_with_index
@@ -24,8 +25,9 @@ module Enumerable
       arr = collect.to_a
       arr.my_each { |i| "#{arr[i]}  #{i}" }
     end
+    return self
   end
-
+  
   # My Select Method
   def my_select
     return to_enum unless block_given?
@@ -55,13 +57,17 @@ module Enumerable
       return false
     elsif !args.nil? && (args.is_a? Class)
       return true
+    elsif !block_given? && !args.nil?
+       return false 
     elsif Regexp
       my_each do |i|
-        return false if args.match(i)
+        return true if args.match(i)
       end
+      return false
     end
     true
   end
+  
 
   def my_any?(args = nil)
     check = false
@@ -104,6 +110,12 @@ module Enumerable
     end
     false
   end
+
+  true_block =  proc { |num| num <= 9 }
+  false_block =  proc { |num| num > 9 }
+  range = Range.new(5,50)
+  p range.my_any?(&false_block) 
+  # p range.any?(&false_block)
 
   def my_none?(args = nil)
     if block_given?
@@ -221,3 +233,4 @@ def multiply_els(arra)
     i * j
   end
 end
+

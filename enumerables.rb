@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # module custom Enumerables
 # rubocop:disable Metrics/ModuleLength
 module Enumerable
@@ -6,6 +8,8 @@ module Enumerable
   # My Each Method
 
   def my_each
+    return to_enum unless block_given?
+
     if is_a? Array
       length.times do |i|
         yield(self[i])
@@ -146,9 +150,11 @@ module Enumerable
   end
 
   # My Inject
-  def my_inject(param = nil)
+  def my_inject(param = nil, sym = nil)
     arra = []
     arra = collect.to_a
+    return LocalJumpError if !block_given? && param.nil?
+
     if block_given? && param.nil?
       if is_a? Range
         sum = arra[0]
@@ -180,6 +186,13 @@ module Enumerable
     elsif param.is_a? Symbol
       sum = arra[0]
       symb = param.to_sym
+      (arra.length - 1).times do |i|
+        sum = sum.send(symb, arra[i + 1])
+      end
+      sum
+    elsif sym.is_a? Symbol
+      sum = arra[0]
+      symb = sym.to_sym
       (arra.length - 1).times do |i|
         sum = sum.send(symb, arra[i + 1])
       end
@@ -225,8 +238,6 @@ end
 
 # Use multipliyer with inject ymethod
 def multiply_els(arra)
-  return to_enum unless block_given?
-
   arra.my_inject do |i, j|
     i * j
   end

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # module custom Enumerables
 # rubocop:disable Metrics/ModuleLength
 module Enumerable

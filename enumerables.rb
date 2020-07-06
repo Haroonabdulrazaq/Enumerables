@@ -4,9 +4,16 @@ module Enumerable
   # My Each Method
 
   def my_each
-    return to_enum unless block_given?
-    length.times do |i|
-      yield(self[i])
+   # return to_enum unless block_given?
+    if is_a? Array
+      length.times do |i|
+        yield(self[i])
+      end
+    elsif is_a? Range
+      arr = collect.to_a
+      arr.length.times do |i|
+        yield(arr[i])
+      end
     end
     return self
   end
@@ -25,7 +32,7 @@ module Enumerable
     end
     return self
   end
-  
+ 
   # My Select Method
   def my_select
     return to_enum unless block_given?
@@ -62,10 +69,11 @@ module Enumerable
         return true if args.match(i)
       end
       return false
+    elsif self.is_a? Range 
+      return "Its a range"
     end
     true
   end
-  
 
   def my_any?(args = nil)
     check = false

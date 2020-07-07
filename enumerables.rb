@@ -117,9 +117,14 @@ module Enumerable
       return is_true
     elsif !(args.is_a? Class) && args != Regexp
       my_each do |x|
-        return true if x == args
+        if x == false || x.nil?
+          check = false
+        else
+          check = true
+          return check
+        end
       end
-      return false
+      return check
     end
     unless block_given?
       my_each { |x| return true if x == true }

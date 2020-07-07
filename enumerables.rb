@@ -7,33 +7,19 @@ module Enumerable
 
   def my_each
     return to_enum unless block_given?
-
-    if is_a? Array
+    arra = is_a?(Array) ? self : self.to_a
       length.times do |i|
-        yield(self[i])
+        yield(arra[i])
       end
-    elsif is_a? Range
-      arr = collect.to_a
-      arr.length.times do |i|
-        yield(arr[i])
-      end
-    end
-    self
+     self    
   end
-
   # My  Each_with_index
   def my_each_with_index
     return to_enum unless block_given?
-
-    arr = []
-    if is_a? Array
-      length.times do |i|
-        yield(self[i], i)
-      end
-    elsif is_a? Range
-      arr = collect.to_a
-      arr.my_each { |i| "#{arr[i]}  #{i}" }
-    end
+   arr = is_a?(Array) ? self : self.to_a
+      arr.length.times do |i|
+        yield(arr[i], i)
+      end 
     self
   end
 
@@ -76,6 +62,7 @@ module Enumerable
     true
   end
 
+  #my_Any
   def my_any?(args = nil)
     check = false
     is_true = false
@@ -199,6 +186,7 @@ module Enumerable
     end
   end
 
+#My_Count
   def my_count(num = nil)
     counter = 0
     if !num.nil?
@@ -212,7 +200,7 @@ module Enumerable
     counter
   end
 
-  # My Count
+
 
   # My  my_map with condition of Proc and Block
   def my_map(proc = nil)

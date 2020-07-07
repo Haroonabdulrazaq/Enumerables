@@ -7,19 +7,22 @@ module Enumerable
 
   def my_each
     return to_enum unless block_given?
-    arra = is_a?(Array) ? self : self.to_a
-      length.times do |i|
-        yield(arra[i])
-      end
-     self    
+
+    arra = is_a?(Array) ? self : to_a
+    length.times do |i|
+      yield(arra[i])
+    end
+    self
   end
+
   # My  Each_with_index
   def my_each_with_index
     return to_enum unless block_given?
-   arr = is_a?(Array) ? self : self.to_a
-      arr.length.times do |i|
-        yield(arr[i], i)
-      end 
+
+    arr = is_a?(Array) ? self : to_a
+    arr.length.times do |i|
+      yield(arr[i], i)
+    end
     self
   end
 
@@ -50,7 +53,27 @@ module Enumerable
     elsif args.nil? && (args.is_a? Class)
       return false
     elsif !args.nil? && (args.is_a? Class)
-      return true
+      class_chk = false
+      my_each do |i|
+        if i.is_a? args
+          class_chk = true
+        else
+          class_chk = false
+          return class_chk
+        end
+      end
+      return class_chk
+    elsif !args.nil?
+      chk = false
+      my_each do |i|
+        if args == i
+          chk = true
+        else
+          chk = false
+          return chk
+        end
+        return chk
+      end
     elsif !block_given? && !args.nil?
       return false
     elsif Regexp
@@ -62,7 +85,7 @@ module Enumerable
     true
   end
 
-  #my_Any
+  # my_Any
   def my_any?(args = nil)
     check = false
     is_true = false
@@ -127,6 +150,19 @@ module Enumerable
 
         return true
       end
+    elsif !args.nil?
+      chk_array = []
+      param_chk = false
+      my_each do |i|
+        if args != i
+          param_chk = 1
+          chk_array.push(param_chk)
+        else
+          param_chk = 0
+          return false
+        end
+      end
+      return chk_array.my_all?(1)
     end
     unless block_given?
       my_each { |x| return false if x == true }
@@ -139,7 +175,7 @@ module Enumerable
   def my_inject(param = nil, sym = nil)
     arra = []
     arra = collect.to_a
-    return LocalJumpError if !block_given? && param.nil?
+    return 'no block given (LocalJumpError)' if !block_given? && param.nil?
 
     if block_given? && param.nil?
       if is_a? Range
@@ -161,6 +197,7 @@ module Enumerable
         (arra.length - 1).times do |i|
           sum = yield(sum, arra[i + 1])
         end
+        sum = yield(sum, param)
         sum
       else
         result = self[0]
@@ -182,11 +219,12 @@ module Enumerable
       (arra.length - 1).times do |i|
         sum = sum.send(symb, arra[i + 1])
       end
+      sum = sum.send(symb, param)
       sum
     end
   end
 
-#My_Count
+  # My_Count
   def my_count(num = nil)
     counter = 0
     if !num.nil?
@@ -199,8 +237,6 @@ module Enumerable
     end
     counter
   end
-
-
 
   # My  my_map with condition of Proc and Block
   def my_map(proc = nil)

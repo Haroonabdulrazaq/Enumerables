@@ -169,7 +169,7 @@ module Enumerable
   def my_inject(param = nil, sym = nil)
     arra = []
     arra = collect.to_a
-    return 'no block given (LocalJumpError)' if !block_given? && param.nil?
+    return raise LocalJumpError, 'no block given' if !block_given? && param.nil?
 
     if block_given? && param.nil?
       if is_a? Range

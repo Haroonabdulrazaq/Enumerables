@@ -46,28 +46,24 @@ module Enumerable
       my_each do |element|
         return false if yield(element) == false
       end
-    return true
     elsif args.nil?
       my_each do |i|
-        return false if i == false || i == nil
+        return false if i == false || i.nil?
       end
-    return true
     elsif !args.nil? && (args.is_a? Class)
       my_each do |i|
-        return false if i.class != args
+        return false unless i.is_a? args
       end
-    return true
     elsif !args.nil? && args.class == Regexp
       my_each do |i|
-        return false if !args.match(i)
+        return false unless args.match(i)
       end
-      return true
     else
       my_each do |i|
         return false if i != args
       end
-      return true
     end
+    true
   end
 
   # my_Any
@@ -101,26 +97,23 @@ module Enumerable
       end
       return is_true
     elsif !(args.is_a? Class) && args != Regexp
-      chk = false
-      if args != nil
+      if !args.nil?
         my_each do |i|
-          return "true" if i == args 
-        end 
-        return false
-      else
-        chk = false
-        my_each do |i|
-          if i == nil || i == false
-            chk = false
-          else
-            chk = true
-            return true
-          end
-          return chk
+          return true if i == args
         end
         return false
+      else
+        mah_chk = false
+        my_each do |i|
+          if i.nil? || i == false
+            mah_chk = false
+          else
+            mah_chk = true
+            return true
+          end
+        end
+        return mah_chk
       end
-      return false
     end
     unless block_given?
       my_each { |x| return true if x == true }
@@ -128,25 +121,6 @@ module Enumerable
     end
     false
   end
-
-#  words = ["dog", "catt", "rod", "blade"] 
-#  p words.any?('cat') == words.my_any?('cat')#=> true 
-# p %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
-# p %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
-# p %w[ant bear cat].my_any?(/d/)                        #=> false
-# p [nil, true, 99].my_any?(Integer)                     #=> true
-p [nil, true, 99].my_any?                              #=> true
-# p [].my_any?                                           #=> false
-
-# true_block =  proc { |num| num <= 9 }
-# false_block =  proc { |num| num > 9 }
-# range = Range.new(5,50)
-# p range.my_any?(&false_block) == range.any?(&false_block) #true
-# words = %w[dog door rod blade]
-# p words.my_any?('cat') == words.any?('cat') #true
-# p [nil, false, nil, false].any? # should return false
-
-
 
   def my_none?(args = nil)
     if block_given?

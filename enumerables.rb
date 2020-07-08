@@ -46,56 +46,29 @@ module Enumerable
       my_each do |element|
         return false if yield(element) == false
       end
+    return true
     elsif args.nil?
       my_each do |i|
-        return false if i.nil?
+        return false if i == false || i == nil
       end
-    elsif args.nil? && (args.is_a? Class)
-      return false
+    return true
     elsif !args.nil? && (args.is_a? Class)
-      class_chk = false
       my_each do |i|
-        if i.is_a? args
-          class_chk = true
-        else
-          class_chk = false
-          return class_chk
-        end
+        return false if i.class != args
       end
-      return class_chk
+    return true
     elsif !args.nil? && args.class == Regexp
-       my_each do |i|
-        return "trueReg" if args.match(i)
+      my_each do |i|
+        return false if !args.match(i)
       end
-      return "falseRegex"
-    elsif args == nil
-      return "falsenil"
+      return true
+    else
+      my_each do |i|
+        return false if i != args
+      end
+      return true
     end
-   " true1"
   end
-  false_array = [1, false, 'hi', []]
-p false_array.all? #=> false 
-p false_array.my_all? # => false 
-words = ["dog", "door", "rod", "blade"] 
-# p words.my_all?(/d/) #=> false 
-# p words.all?(/d/) #=> false 
-# true_block = proc { |num| num <= 9 } 
-# false_block = proc { |num| num > 9 } 
-# range = Range.new(5, 50)
-#p range.my_all?(&false_block) == range.all?(&false_block) #true
-# true_array = [1, true, 'hi', []] 
-# false_array = [1, false, 'hi', []] 
-# p true_array.my_all? == true_array.all? # should return true
-# array = Array.new(100){rand(0...9)}
-# p array.my_all?(Integer) == array.all?(Integer)
-# words = %w[dog door rod blade]
-# p words.my_all?(/d/) == words.all?(/d/) #true
-# p array.my_all?(3) == array.all?(3) # should return true
-# p [1,2,3].my_all?(3)
-# p %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
-# p %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
-# p %w[ant bear cat].my_all?(/t/) #=> false
-# p [1, 2i, 3.14].my_all?(Numeric) 
 
   # my_Any
   def my_any?(args = nil)
@@ -128,15 +101,26 @@ words = ["dog", "door", "rod", "blade"]
       end
       return is_true
     elsif !(args.is_a? Class) && args != Regexp
-      my_each do |x|
-        if x == false || x.nil?
-          check = false
-        else
-          check = true
-          return check
+      chk = false
+      if args != nil
+        my_each do |i|
+          return "true" if i == args 
+        end 
+        return false
+      else
+        chk = false
+        my_each do |i|
+          if i == nil || i == false
+            chk = false
+          else
+            chk = true
+            return true
+          end
+          return chk
         end
+        return false
       end
-      return check
+      return false
     end
     unless block_given?
       my_each { |x| return true if x == true }
@@ -144,6 +128,25 @@ words = ["dog", "door", "rod", "blade"]
     end
     false
   end
+
+#  words = ["dog", "catt", "rod", "blade"] 
+#  p words.any?('cat') == words.my_any?('cat')#=> true 
+# p %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
+# p %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
+# p %w[ant bear cat].my_any?(/d/)                        #=> false
+# p [nil, true, 99].my_any?(Integer)                     #=> true
+p [nil, true, 99].my_any?                              #=> true
+# p [].my_any?                                           #=> false
+
+# true_block =  proc { |num| num <= 9 }
+# false_block =  proc { |num| num > 9 }
+# range = Range.new(5,50)
+# p range.my_any?(&false_block) == range.any?(&false_block) #true
+# words = %w[dog door rod blade]
+# p words.my_any?('cat') == words.any?('cat') #true
+# p [nil, false, nil, false].any? # should return false
+
+
 
   def my_none?(args = nil)
     if block_given?

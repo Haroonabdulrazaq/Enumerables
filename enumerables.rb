@@ -9,7 +9,7 @@ module Enumerable
     return to_enum unless block_given?
 
     arra = is_a?(Array) ? self : to_a
-    length.times do |i|
+    arra.length.times do |i|
       yield(arra[i])
     end
     self
@@ -63,27 +63,39 @@ module Enumerable
         end
       end
       return class_chk
-    elsif !args.nil?
-      chk = false
-      my_each do |i|
-        if args == i
-          chk = true
-        else
-          chk = false
-          return chk
-        end
-        return chk
+    elsif !args.nil? && args.class == Regexp
+       my_each do |i|
+        return "trueReg" if args.match(i)
       end
-    elsif !block_given? && !args.nil?
-      return false
-    elsif Regexp
-      my_each do |i|
-        return true if args.match(i)
-      end
-      return false
+      return "falseRegex"
+    elsif args == nil
+      return "falsenil"
     end
-    true
+   " true1"
   end
+  false_array = [1, false, 'hi', []]
+p false_array.all? #=> false 
+p false_array.my_all? # => false 
+words = ["dog", "door", "rod", "blade"] 
+# p words.my_all?(/d/) #=> false 
+# p words.all?(/d/) #=> false 
+# true_block = proc { |num| num <= 9 } 
+# false_block = proc { |num| num > 9 } 
+# range = Range.new(5, 50)
+#p range.my_all?(&false_block) == range.all?(&false_block) #true
+# true_array = [1, true, 'hi', []] 
+# false_array = [1, false, 'hi', []] 
+# p true_array.my_all? == true_array.all? # should return true
+# array = Array.new(100){rand(0...9)}
+# p array.my_all?(Integer) == array.all?(Integer)
+# words = %w[dog door rod blade]
+# p words.my_all?(/d/) == words.all?(/d/) #true
+# p array.my_all?(3) == array.all?(3) # should return true
+# p [1,2,3].my_all?(3)
+# p %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
+# p %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
+# p %w[ant bear cat].my_all?(/t/) #=> false
+# p [1, 2i, 3.14].my_all?(Numeric) 
 
   # my_Any
   def my_any?(args = nil)

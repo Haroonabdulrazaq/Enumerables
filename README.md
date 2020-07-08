@@ -6,7 +6,7 @@ In this project we re-created some of the Ruby's enumerable methods like each, a
 ## Getting Started
 
 - To clone enter this command in your terminal 
-- `git clone git@github.com:Haroonabdulrazaq/Enumerables.git
+- `git clone https://github.com/Haroonabdulrazaq/Enumerables.git`
 - `cd` into the project directory
 - Run `git checkout -b your-branch-name` e.g `git checkout -b enumerables`
 
@@ -51,6 +51,5 @@ Give a ⭐️ if you like this project!
 
 - Project inspired by Microverse Program
 - Project originally taken from the odin project
-
 
 

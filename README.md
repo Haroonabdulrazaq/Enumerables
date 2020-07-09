@@ -24,8 +24,8 @@ Contributions, issues and feature requests are welcome! Start by:
 
 ## Live Demo
 
-[Umair Ahmad Live Demo Link](https://repl.it/@UmairAhmad125/FrivolousMotionlessAbstracttype#main.rb)
-[Haroon Abdulrazaq Live Demo Link](https://repl.it/@Haroon136/Enumerables)
+- [Umair Ahmad Live Demo Link](https://repl.it/@UmairAhmad125/FrivolousMotionlessAbstracttype#main.rb)
+- [Haroon Abdulrazaq Live Demo Link](https://repl.it/@Haroon136/Enumerables)
 
 ## Author
 

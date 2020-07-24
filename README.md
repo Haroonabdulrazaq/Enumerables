@@ -51,6 +51,3 @@ Give a ⭐️ if you like this project!
 
 - Project inspired by Microverse Program
 - Project originally taken from the odin project
-
-
---Checking if you can see this @Hubert

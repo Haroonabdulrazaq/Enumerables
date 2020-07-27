@@ -203,5 +203,10 @@ describe Enumerable do
                 original_result = arr.map{|x| x*3}
                 expect(my_result).to eql(original_result)
             end
+
+            it "returns a modified array if proc is given" do
+                square = Proc.new {|x| x**2 }
+                expect(arr.my_map(&square)).to eql(arr.map {|x| x**2 })
+            end
     end
 end

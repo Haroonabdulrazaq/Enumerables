@@ -135,6 +135,7 @@ module Enumerable
     end
     out_value
   end
+  
   # My Inject
   def my_inject(param = nil, sym = nil)
     arra = []

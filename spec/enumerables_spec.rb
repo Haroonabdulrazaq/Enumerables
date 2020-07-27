@@ -1,12 +1,15 @@
 require './enumerables.rb'
 
 describe Enumerable do 
-    let (:arr) {[1,2,5]}   
+    let (:arr) {[1,2,5,2,1,2]}   
     let (:my_arr) {[]}
     let (:original_arr ) {[]}
     let (:hash) {{"javaScript": 2018, "PHP": 2002, "java": 1995}}
     let (:my_hash) {[]}
     let (:original_hash) {[]}
+    let (:my_result) {0}
+    let (:original_result) {0}
+
 
     describe "#my_each" do
         context "If block is given" do        
@@ -31,8 +34,6 @@ describe Enumerable do
         end
     end
 
-
-
     describe "#my_each_with_index" do
         context "If block is given" do
             it "Iterate over array and returns the iterated array" do
@@ -55,6 +56,25 @@ describe Enumerable do
             end
         end
     end
+
+    describe "#my_count" do
+        context "when block is not given "  do
+            it "returns the number of element in the array" do
+                 my_result = arr.my_count
+                 original_result = arr.count
+                 expect(my_result).to eql(original_result)
+            end
+
+            it "argument is given returns the number of element that match the argument" do
+                 my_result = arr.my_count(2)
+                 original_result = arr.count(2)
+                 expect(my_result).to eql(original_result)
+            end
+        end
+    end
+
+
+    
 end
 
 

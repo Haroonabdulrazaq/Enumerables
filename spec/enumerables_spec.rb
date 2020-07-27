@@ -80,6 +80,16 @@ describe Enumerable do
         end
     end
 
+    describe "#my_select" do
+        context "if block given" do
+            it "returns element that match the test in block" do 
+                arr.my_select{|x| my_arr << x.even?}
+                arr.select{|x| original_arr << x.even?}
+                expect(my_arr).to eql(original_arr)
+            end
+        end
+    end 
+
 
     
 end

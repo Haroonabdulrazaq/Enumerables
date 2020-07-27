@@ -39,8 +39,6 @@ module Enumerable
   end
 
   # My  All
-  # rubocop:disable Metrics/AbcSize
-
   def my_all?(args = nil)
     if block_given?
       my_each do |element|
@@ -183,7 +181,6 @@ module Enumerable
     end
     result
   end
-  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/ModuleLength
   # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength

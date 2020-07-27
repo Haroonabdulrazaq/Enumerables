@@ -58,17 +58,24 @@ describe Enumerable do
     end
 
     describe "#my_count" do
-        context "when block is not given "  do
+        context "when block is not given"  do
             it "returns the number of element in the array" do
                  my_result = arr.my_count
                  original_result = arr.count
                  expect(my_result).to eql(original_result)
             end
 
-            it "argument is given returns the number of element that match the argument" do
+            it "If argument is given returns the number of element that match the argument" do
                  my_result = arr.my_count(2)
                  original_result = arr.count(2)
                  expect(my_result).to eql(original_result)
+            end
+        end
+        context "If block is given" do
+            it "returns element that matches the condition in the block" do
+                my_result = arr.my_count{|x| x%2 ==0}
+                original_result = arr.count{|x| x%2 ==0}
+                expect(my_result).to eql(original_result)
             end
         end
     end

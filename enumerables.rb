@@ -122,49 +122,19 @@ module Enumerable
     false
   end
 
-  def my_none?(args = nil)
+  def my_none?(obj = Object)
+    out_value = true
     if block_given?
-      check = false
-      my_each do |element|
-        if yield(element) == false
-          check = true
-        else
-          check = false
-          return check
-        end
-      end
-      return check
-    elsif !args.nil? && (args.is_a? Class)
-      my_each do |i|
-        return false if i.is_a? args
-      end
-    elsif args.class == Regexp
-      my_each do |i|
-        return false if i.match(args)
-
-        return true
-      end
-    elsif !args.nil?
-      chk_array = []
-      param_chk = false
-      my_each do |i|
-        if args != i
-          param_chk = 1
-          chk_array.push(param_chk)
-        else
-          param_chk = 0
-          return false
-        end
-      end
-      return chk_array.my_all?(1)
+      my_each { |i| out_value = false if yield(i) }
+    elsif obj.is_a?(Class)
+      my_each { |i| out_value = false if i }
+    elsif obj.is_a?(Regexp)
+      my_each {|i| out_value = false if i}
+    else
+      my_each { |i| out_value = false if i == obj }
     end
-    unless block_given?
-      my_each { |x| return false if x == true }
-      return true
-    end
-    false
+    out_value
   end
-
   # My Inject
   def my_inject(param = nil, sym = nil)
     arra = []

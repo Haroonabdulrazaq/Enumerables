@@ -146,6 +146,30 @@ describe Enumerable do
                 expect(my_result).to eql(true)
             end
         end
-
     end  
+
+    describe "#my_none?" do
+        context "If a block is given" do
+            it "returns false when any of the element is true" do
+                my_result = word_arr.my_none? { |word| word.length >= 3}
+                expect(my_result).to eql(false)
+            end
+        end
+
+        context "If block is not given" do
+            it "returns false if any element matches the regexp" do
+                my_result = word_arr.my_none?(/c/)
+                expect(my_result).to eql(false)
+            end
+            it "returns false if any element matches the class" do
+                my_result = bool_arr.my_none?(TrueClass)
+                expect(my_result).to eql(false)
+            end
+            it "returns false if any element is true and argument is nil" do
+                my_result = arr.my_none?
+                expect(my_result).to eql(false)
+            end
+        end
+    end 
+
 end

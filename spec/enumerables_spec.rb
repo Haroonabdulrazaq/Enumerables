@@ -209,11 +209,9 @@ describe Enumerable do
     end
   end
 
-  describe "#multiply_els" do
-    it "returns the prodecuts of elements in the array" do
-      expect(multiply_els(arr)).to eql(40)  
+  describe '#multiply_els' do
+    it 'returns the prodecuts of elements in the array' do
+      expect(multiply_els(arr)).to eql(40)
     end
   end
-
-
 end

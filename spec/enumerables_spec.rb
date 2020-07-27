@@ -174,13 +174,14 @@ describe Enumerable do
         expect(my_result).to eql(original_result)
       end
       it 'returns false if any element matches the class' do
-        my_result = word_arr.my_none?(TrueClass)
-        original_result = word_arr.none?(TrueClass)
+        my_result = bool_arr.my_none?(TrueClass)
+        original_result = bool_arr.none?(TrueClass)
         expect(my_result).to eql(original_result)
       end
       it 'returns false if any element is true and argument is nil' do
         my_result = arr.my_none?
-        expect(my_result).to eql(false)
+        original_result = arr.my_none?
+        expect(my_result).to eql(original_result)
       end
     end
   end
@@ -189,7 +190,8 @@ describe Enumerable do
     context 'If no block is given' do
       it 'returns the sum of all elements' do
         my_result = arr.my_inject(:+)
-        expect(my_result).to eql(arr.inject(:+))
+        original_result = arr.inject(:+)
+        expect(my_result).to eql(original_result)
       end
       it 'returns the product of all elements' do
         my_result = arr.my_inject(1, :*)

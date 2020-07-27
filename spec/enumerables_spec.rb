@@ -122,11 +122,30 @@ describe Enumerable do
                 expect(my_result).to eql(false)
             end
         end
-    end  
-
-
+    end
     
+    describe "#my_any?" do
+        context "If a block is given" do
+            it "returns true when any of the element is true" do
+                my_result = word_arr.my_any? { |word| word.length >= 3}
+                expect(my_result).to eql(true)
+            end
+        end
+
+        context "If block is not given" do
+            it "returns true if any element matches the regexp" do
+                my_result = word_arr.my_any?(/c/)
+                expect(my_result).to eql(true)
+            end
+            it "returns true if any element matches the class" do
+                my_result = bool_arr.my_any?(TrueClass)
+                expect(my_result).to eql(true)
+            end
+            it "returns true if any element is true and argument is nil" do
+                my_result = arr.my_any?
+                expect(my_result).to eql(true)
+            end
+        end
+
+    end  
 end
-
-
-  

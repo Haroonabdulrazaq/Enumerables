@@ -134,22 +134,26 @@ describe Enumerable do
     context 'If a block is given' do
       it 'returns true when any of the element is true' do
         my_result = word_arr.my_any? { |word| word.length >= 3 }
-        expect(my_result).to eql(true)
+        original_result = word_arr.any? { |word| word.length >= 3 }
+        expect(my_result).to eql(original_result)
       end
     end
 
     context 'If block is not given' do
       it 'returns true if any element matches the regexp' do
-        my_result = word_arr.my_any?(/c/)
-        expect(my_result).to eql(true)
+        my_result = word_arr.my_any?(/c/)  
+        original_result = word_arr.any?(/c/)  
+        expect(my_result).to eql( original_result)
       end
       it 'returns true if any element matches the class' do
         my_result = bool_arr.my_any?(TrueClass)
-        expect(my_result).to eql(true)
+        original_result =  bool_arr.any?(TrueClass)
+        expect(my_result).to eql( original_result)
       end
       it 'returns true if any element is true and argument is nil' do
         my_result = arr.my_any?
-        expect(my_result).to eql(true)
+        original_result = arr.any?
+        expect(my_result).to eql(original_result)
       end
     end
   end
@@ -158,18 +162,21 @@ describe Enumerable do
     context 'If a block is given' do
       it 'returns false when any of the element is true' do
         my_result = word_arr.my_none? { |word| word.length >= 3 }
-        expect(my_result).to eql(false)
+        original_result = word_arr.none? { |word| word.length >= 3 }
+        expect(my_result).to eql(original_result)
       end
     end
 
     context 'If block is not given' do
       it 'returns false if any element matches the regexp' do
         my_result = word_arr.my_none?(/c/)
-        expect(my_result).to eql(false)
+        original_result = word_arr.none?(/c/)
+        expect(my_result).to eql(original_result)
       end
       it 'returns false if any element matches the class' do
-        my_result = bool_arr.my_none?(TrueClass)
-        expect(my_result).to eql(false)
+        my_result = word_arr.my_none?(TrueClass)
+        original_result = word_arr.none?(TrueClass)
+        expect(my_result).to eql(original_result)
       end
       it 'returns false if any element is true and argument is nil' do
         my_result = arr.my_none?

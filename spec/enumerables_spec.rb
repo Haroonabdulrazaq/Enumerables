@@ -170,6 +170,31 @@ describe Enumerable do
                 expect(my_result).to eql(false)
             end
         end
-    end 
+    end
+
+    describe "#my_inject" do
+        context "If no block is given" do
+            it "returns the sum of all elements" do
+                my_result = arr.my_inject(:+)
+                expect(my_result).to eql(arr.inject(:+))
+            end
+            it "returns the product of all elements" do
+                my_result = arr.my_inject(1, :*)
+                expect(my_result).to eql(arr.inject(1, :*))
+            end
+        end
+        context "If a block is given" do
+            it "returns the product of all elements multiplied with the argument" do
+                my_result = arr.my_inject(1) { |product, n| product * n}
+                original_result = arr.inject(1) { |product, n| product * n}
+                expect(my_result).to eql(original_result)
+            end
+            it "returns the sum of all elements" do
+                my_result = arr.my_inject { |sum, n| sum + n}
+                original_result = arr.inject { |sum, n| sum + n}
+                expect(my_result).to eql(original_result)
+            end
+        end
+    end
 
 end

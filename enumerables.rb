@@ -136,56 +136,73 @@ module Enumerable
     out_value
   end
   # My Inject
-  def my_inject(param = nil, sym = nil)
-    arra = []
-    arra = collect.to_a
-    return raise LocalJumpError, 'no block given' if !block_given? && param.nil?
+  # def my_inject(param = nil, sym = nil)
+  #   arra = []
+  #   arra = collect.to_a
+  #   return raise LocalJumpError, 'no block given' if !block_given? && param.nil?
 
-    if block_given? && param.nil?
-      if is_a? Range
-        sum = arra[0]
-        (arra.length - 1).times do |i|
-          sum = yield(sum, arra[i + 1])
-        end
-        sum
-      else
-        result = self[0]
-        (length - 1).times do |i|
-          result = yield(result, self[i + 1])
-        end
-        result
-      end
-    elsif block_given? && !param.nil?
-      if is_a? Range
-        sum = arra[0]
-        (arra.length - 1).times do |i|
-          sum = yield(sum, arra[i + 1])
-        end
-        sum = yield(sum, param)
-        sum
-      else
-        result = self[0]
-        (length - 1).times do |i|
-          result = yield(result, self[i + 1])
-          return result
-        end
-      end
-    elsif param.is_a? Symbol
-      sum = arra[0]
-      symb = param.to_sym
-      (arra.length - 1).times do |i|
-        sum = sum.send(symb, arra[i + 1])
-      end
-      sum
-    elsif sym.is_a? Symbol
-      sum = arra[0]
-      symb = sym.to_sym
-      (arra.length - 1).times do |i|
-        sum = sum.send(symb, arra[i + 1])
-      end
-      sum = sum.send(symb, param)
-      sum
+  #   if block_given? && param.nil?
+  #     if is_a? Range
+  #       sum = arra[0]
+  #       (arra.length - 1).times do |i|
+  #         sum = yield(sum, arra[i + 1])
+  #       end
+  #       sum
+  #     else
+  #       result = self[0]
+  #       (length - 1).times do |i|
+  #         result = yield(result, self[i + 1])
+  #       end
+  #       result
+  #     end
+  #   elsif block_given? && !param.nil?
+  #     if is_a? Range
+  #       sum = arra[0]
+  #       (arra.length - 1).times do |i|
+  #         sum = yield(sum, arra[i + 1])
+  #       end
+  #       sum = yield(sum, param)
+  #       sum
+  #     else
+  #       result = self[0]
+  #       (length - 1).times do |i|
+  #         result = yield(result, self[i + 1])
+  #         return result
+  #       end
+  #     end
+  #   elsif param.is_a? Symbol
+  #     sum = arra[0]
+  #     symb = param.to_sym
+  #     (arra.length - 1).times do |i|
+  #       sum = sum.send(symb, arra[i + 1])
+  #     end
+  #     sum
+  #   elsif sym.is_a? Symbol
+  #     sum = arra[0]
+  #     symb = sym.to_sym
+  #     (arra.length - 1).times do |i|
+  #       sum = sum.send(symb, arra[i + 1])
+  #     end
+  #     sum = sum.send(symb, param)
+  #     sum
+  #   end
+  # end
+
+  def my_inject(*args)
+    if block_given? && args[0].nil?
+      acc = to_a[0]
+      to_a[1..-1].my_each { |i| acc = yield(acc, i) }
+    elsif block_given?
+      acc = args[0]
+      my_each { |i| acc = yield(acc, i) }
+    elsif args.size == 2
+      acc = args[0]
+      my_each { |i| acc = acc.send(args[1], i) }
+    elsif args.size == 1
+      acc = to_a[0]
+      to_a[1..-1].my_each { |i| acc = acc.send(args[0], i) }
     end
+    acc
   end
 
   # My_Count

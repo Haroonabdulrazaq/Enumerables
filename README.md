@@ -2,13 +2,19 @@
 In this project we re-created some of the Ruby's enumerable methods like each, all, any, none, count, inject and map. 
 ## Built With
 
-- Ruby 2.7.1
+- Ruby
 ## Getting Started
 
 - To clone enter this command in your terminal 
 - `git clone https://github.com/Haroonabdulrazaq/Enumerables.git`
 - `cd` into the project directory
 - Run `git checkout -b your-branch-name` e.g `git checkout -b enumerables`
+
+## Installation
+After youve clone the repository
+- <code>gem install rspec</code>
+- <code>cd Enumerables</code>
+- <code>rspec --init</code>
 
 ## 🤝 Contributing
 
@@ -42,6 +48,12 @@ Contributions, issues and feature requests are welcome! Start by:
 - Linkedin: https://www.linkedin.com/in/haroon-abdulrazaq-817906100/ 
 - Twitter: [@Hanq_o](https://twitter.com/Hanq_o)
 - email: (Haroonabdulrazaq@gmail.com)
+
+👤 **Hubert MUGABO**
+
+- Github: [@mugberto](https://github.com/mugberto)
+- Twitter: [@mugberto](https://twitter.com/mugberto)
+- Linkedin: [mugberto](https://www.linkedin.com/in/hubert-mugabo-23144b6a/)
 
 ## Show your support
 

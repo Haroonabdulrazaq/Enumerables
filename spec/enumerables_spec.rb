@@ -4,6 +4,8 @@ describe Enumerable do
     let (:arr) {[1,2,5,2,1,2]}   
     let (:my_arr) {[]}
     let (:original_arr ) {[]}
+    let (:bool_arr) {[true, true, 1, 99]}
+    let (:word_arr) {["cat", "car", "can", "cut"]}
     let (:hash) {{"javaScript": 2018, "PHP": 2002, "java": 1995}}
     let (:my_hash) {[]}
     let (:original_hash) {[]}
@@ -95,6 +97,32 @@ describe Enumerable do
             end 
         end
     end 
+
+    describe "#my_all?" do
+        context "If block given" do
+            it "returns all element that passes the block condition" do
+               my_result = word_arr.my_all?{|word| word.length <= 3 }
+               expect(my_result).not_to eql(false)
+            end
+        end
+
+        context "if arguments given"  do  
+            it "returns true for all element that matches the regexp" do
+                expect(word_arr.my_all?(/c/)).not_to eql(false)
+            end
+
+            it "returns true i all lement is matches the class" do
+                expect(arr.my_all?(Numeric)).not_to eql(false)
+            end
+        end
+
+        context "if argument is nil" do
+            it "returns true is none returns false" do
+                my_result = [nil, false, true].my_all?
+                expect(my_result).to eql(false)
+            end
+        end
+    end  
 
 
     

@@ -208,4 +208,12 @@ describe Enumerable do
       expect(arr.my_map(&square)).to eql(arr.map(&square))
     end
   end
+
+  describe "#multiply_els" do
+    it "returns the prodecuts of elements in the array" do
+      expect(multiply_els(arr)).to eql(40)  
+    end
+  end
+
+
 end

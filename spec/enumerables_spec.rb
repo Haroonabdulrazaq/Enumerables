@@ -88,6 +88,12 @@ describe Enumerable do
                 expect(my_arr).to eql(original_arr)
             end
         end
+
+        context "If block not given" do 
+            it "returns an enumerator" do 
+                expect(arr.my_select.is_a?(Enumerable)).not_to be false
+            end 
+        end
     end 
 
 

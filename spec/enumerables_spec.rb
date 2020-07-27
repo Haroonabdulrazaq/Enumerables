@@ -5,7 +5,7 @@ describe Enumerable do
   let(:my_arr) { [] }
   let(:original_arr) { [] }
   let(:bool_arr) { [true, true, 1, 99] }
-  let (:bool_mix_arr) {[nil, false, true]}
+  let(:bool_mix_arr) { [nil, false, true] }
   let(:word_arr) { %w[cat car can cut] }
   let(:hash) { { "javaScript": 2018, "PHP": 2002, "java": 1995 } }
   let(:my_hash) { [] }
@@ -141,14 +141,14 @@ describe Enumerable do
 
     context 'If block is not given' do
       it 'returns true if any element matches the regexp' do
-        my_result = word_arr.my_any?(/c/)  
-        original_result = word_arr.any?(/c/)  
+        my_result = word_arr.my_any?(/c/)
+        original_result = word_arr.any?(/c/)
         expect(my_result).to eql( original_result)
       end
       it 'returns true if any element matches the class' do
         my_result = bool_arr.my_any?(TrueClass)
-        original_result =  bool_arr.any?(TrueClass)
-        expect(my_result).to eql( original_result)
+        original_result = bool_arr.any?(TrueClass)
+        expect(my_result).to eql(original_result)
       end
       it 'returns true if any element is true and argument is nil' do
         my_result = arr.my_any?

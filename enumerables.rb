@@ -129,7 +129,7 @@ module Enumerable
     elsif obj.is_a?(Class)
       my_each { |i| out_value = false if i }
     elsif obj.is_a?(Regexp)
-      my_each {|i| out_value = false if i}
+      my_each { |i| out_value = false if i }
     else
       my_each { |i| out_value = false if i == obj }
     end

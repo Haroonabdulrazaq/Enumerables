@@ -143,7 +143,7 @@ describe Enumerable do
       it 'returns true if any element matches the regexp' do
         my_result = word_arr.my_any?(/c/)
         original_result = word_arr.any?(/c/)
-        expect(my_result).to eql( original_result)
+        expect(my_result).to eql(original_result)
       end
       it 'returns true if any element matches the class' do
         my_result = bool_arr.my_any?(TrueClass)

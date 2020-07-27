@@ -197,4 +197,11 @@ describe Enumerable do
         end
     end
 
+    describe "#my_map" do 
+            it "returns a modified array of element" do
+                my_result = arr.my_map{|x| x*3}
+                original_result = arr.map{|x| x*3}
+                expect(my_result).to eql(original_result)
+            end
+    end
 end

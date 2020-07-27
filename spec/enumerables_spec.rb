@@ -195,7 +195,8 @@ describe Enumerable do
       end
       it 'returns the product of all elements' do
         my_result = arr.my_inject(1, :*)
-        expect(my_result).to eql(arr.inject(1, :*))
+        original_result = arr.inject(1, :*)
+        expect(my_result).to eql(original_result)
       end
     end
     context 'If a block is given' do

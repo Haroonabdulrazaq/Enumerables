@@ -39,8 +39,6 @@ module Enumerable
   end
 
   # My  All
-  # rubocop:disable Metrics/AbcSize
-
   def my_all?(args = nil)
     if block_given?
       my_each do |element|
@@ -122,100 +120,35 @@ module Enumerable
     false
   end
 
-  def my_none?(args = nil)
+  def my_none?(obj = Object)
+    out_value = true
     if block_given?
-      check = false
-      my_each do |element|
-        if yield(element) == false
-          check = true
-        else
-          check = false
-          return check
-        end
-      end
-      return check
-    elsif !args.nil? && (args.is_a? Class)
-      my_each do |i|
-        return false if i.is_a? args
-      end
-    elsif args.class == Regexp
-      my_each do |i|
-        return false if i.match(args)
-
-        return true
-      end
-    elsif !args.nil?
-      chk_array = []
-      param_chk = false
-      my_each do |i|
-        if args != i
-          param_chk = 1
-          chk_array.push(param_chk)
-        else
-          param_chk = 0
-          return false
-        end
-      end
-      return chk_array.my_all?(1)
+      my_each { |i| out_value = false if yield(i) }
+    elsif obj.is_a?(Class)
+      my_each { |i| out_value = false if i }
+    elsif obj.is_a?(Regexp)
+      my_each { |i| out_value = false if i }
+    else
+      my_each { |i| out_value = false if i == obj }
     end
-    unless block_given?
-      my_each { |x| return false if x == true }
-      return true
-    end
-    false
+    out_value
   end
 
-  # My Inject
-  def my_inject(param = nil, sym = nil)
-    arra = []
-    arra = collect.to_a
-    return raise LocalJumpError, 'no block given' if !block_given? && param.nil?
-
-    if block_given? && param.nil?
-      if is_a? Range
-        sum = arra[0]
-        (arra.length - 1).times do |i|
-          sum = yield(sum, arra[i + 1])
-        end
-        sum
-      else
-        result = self[0]
-        (length - 1).times do |i|
-          result = yield(result, self[i + 1])
-        end
-        result
-      end
-    elsif block_given? && !param.nil?
-      if is_a? Range
-        sum = arra[0]
-        (arra.length - 1).times do |i|
-          sum = yield(sum, arra[i + 1])
-        end
-        sum = yield(sum, param)
-        sum
-      else
-        result = self[0]
-        (length - 1).times do |i|
-          result = yield(result, self[i + 1])
-          return result
-        end
-      end
-    elsif param.is_a? Symbol
-      sum = arra[0]
-      symb = param.to_sym
-      (arra.length - 1).times do |i|
-        sum = sum.send(symb, arra[i + 1])
-      end
-      sum
-    elsif sym.is_a? Symbol
-      sum = arra[0]
-      symb = sym.to_sym
-      (arra.length - 1).times do |i|
-        sum = sum.send(symb, arra[i + 1])
-      end
-      sum = sum.send(symb, param)
-      sum
+  def my_inject(*args)
+    if block_given? && args[0].nil?
+      acc = to_a[0]
+      to_a[1..-1].my_each { |i| acc = yield(acc, i) }
+    elsif block_given?
+      acc = args[0]
+      my_each { |i| acc = yield(acc, i) }
+    elsif args.size == 2
+      acc = args[0]
+      my_each { |i| acc = acc.send(args[1], i) }
+    elsif args.size == 1
+      acc = to_a[0]
+      to_a[1..-1].my_each { |i| acc = acc.send(args[0], i) }
     end
+    acc
   end
 
   # My_Count
@@ -248,7 +181,6 @@ module Enumerable
     end
     result
   end
-  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/ModuleLength
   # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
